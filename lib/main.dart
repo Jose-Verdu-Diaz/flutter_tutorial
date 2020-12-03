@@ -15,23 +15,37 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   var _questionIndex = 0;
+  var _totalScore = 0;
 
   final questions = const [
     {
       'question': 'Q1',
-      'answers': ['A1.1', 'A1.2']
+      'answers': [
+        {'text': 'A1.1', 'score': 1},
+        {'text': 'A1.2', 'score': 2}
+      ]
     },
     {
       'question': 'Q2',
-      'answers': ['A2.1', 'A2.2', 'A2.3']
+      'answers': [
+        {'text': 'A2.1', 'score': 1},
+        {'text': 'A2.2', 'score': 2},
+        {'text': 'A2.3', 'score': 3}
+      ]
     },
     {
       'question': 'Q3',
-      'answers': ['A3.1', 'A3.2', 'A3.3', 'A3.4']
+      'answers': [
+        {'text': 'A3.1', 'score': 1},
+        {'text': 'A3.2', 'score': 2},
+        {'text': 'A3.3', 'score': 3},
+        {'text': 'A3.4', 'score': 4}
+      ]
     }
   ];
 
-  void _answerQuestion() {
+  void _answerQuestion(int score) {
+    _totalScore += score;
     setState(() {
       _questionIndex++;
     });
@@ -48,10 +62,10 @@ class _MyAppState extends State<MyApp> {
         ),
         body: _questionIndex < questions.length
             ? Quiz(
-                selectHandler: _answerQuestion,
+                answerQuestion: _answerQuestion,
                 questions: questions,
                 questionIndex: _questionIndex)
-            : Result(),
+            : Result(_totalScore),
       ),
     );
   }
